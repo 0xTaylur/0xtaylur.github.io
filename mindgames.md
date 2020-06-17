@@ -112,3 +112,8 @@ static void init() {
 }
 ```
 
+After we have made this C file, we must compile it using this command.
+```markdown
+gcc -fPIC -o a.o -c engine.c && gcc -shared -o engine.so -Lcrypto a.o
+```
+
