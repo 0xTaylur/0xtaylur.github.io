@@ -54,10 +54,10 @@ Let's go check out the page!
 ![image]({{0xtaylur.github.io}}/assets/mindgames_page.png)
 
 Hmmm, very intersting. It seems as if the the page decodes the _Brainfuck_ programming language. Let's see what happens when we throw the "Hello, World" section into the textbox.
-![image]({{0xtaylur.github.io}}/assets/hello_world.png)
+![image]({{0xtaylur.github.io}}/assets/mindgames/hello_world.png)
 
 It just prints _"Hello, World"_. Now let's see what happens when we try it with the Fibonacci brainfuck text.
-![image]({{0xtaylur.github.io}}/assets/fibonacci.png)
+![image]({{0xtaylur.github.io}}/assets/mindgames/fibonacci.png)
 
 So it seems like it it runs the actual brainfuck progamming language. Let's see if we can try to get a reverse shell with this knowledge. I headed over to the [Reverse Shell Cheat Sheet](http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet) and used the python reverse shell code.
 ```markdown
@@ -67,10 +67,10 @@ import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s
 After I changed the default IP in that code block to my tun0 IP. (You can find that out by using the command _ifconfig_ in your terminal). I started a netcat session listening on port 1234. I then headed over to a brainfuck encoder to convert it, let's throw this code into the mindgames site and see if we can get an initial shell.
 
 We successfully get a reverse shell as user: _mindgames_
-![image]({{0xtaylur.github.io}}/assets/initial_shell.png)
+![image]({{0xtaylur.github.io}}/assets/mindgames/initial_shell.png)
 
 From here, we can go back one directory and read into _user.txt_
-![image]({{0xtaylur.github.io}}/assets/user.png)
+![image]({{0xtaylur.github.io}}/assets/mindgames/user.png)
 
 ## Privilege Escalation
 
@@ -98,7 +98,7 @@ Saving to: ‘LinEnum.sh’
 Now let's make it an executable file by using _chmod +x LinEnum.sh_. Run LinEnum by using "./LinEnum.sh".
 
 After reading through LinEnum we find that _/usr/bin/openssl_ has [POSIX](https://uwsgi-docs.readthedocs.io/en/latest/Capabilities.html) capability.
-![image]({{0xtaylur.github.io}}/assets/openssl.png)
+![image]({{0xtaylur.github.io}}/assets/mindgames/openssl.png)
 
 After a bit of research, I found a library load via OpenSSL using the C programming language. Create a C file named _engine.c_ and put this code block inside of it.
 ```markdown
@@ -131,10 +131,10 @@ Saving to: ‘engine.so’
 ```
 
 We can now open GTFOBins and search for an OpenSSL Library Load.
-![image]({{0xtaylur.github.io}}/assets/gtfo.png)
+![image]({{0xtaylur.github.io}}/assets/mindgames/gtfo.png)
 
 We can now run this command but switch out "./lib.so" with "./engine.so".
-![image]({{0xtaylur.github.io}}/assets/got_root.png)
+![image]({{0xtaylur.github.io}}/assets/mindgames/got_root.png)
 
 We are now root! We should now be able to cat the root flag.
-![image]({{0xtaylur.github.io}}/assets/root.png)
+![image]({{0xtaylur.github.io}}/assets/mindgames/root.png)
