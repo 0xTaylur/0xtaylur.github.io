@@ -2,7 +2,7 @@
 
 Challenge Link: [Mindgames](https://tryhackme.com/room/mindgames)
 
-Mindgames is a hard rated box on TryHackMe. We're tasked with enumerating, gaining initial access, then a somewhat tricky privilege escalation.
+Mindgames is a hard rated box on TryHackMe. We're tasked with enumerating, gaining initial access, then a somewhat tricky privilege escalation using a Library Load via OpenSSL.
 
 ## Recon
 
