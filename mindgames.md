@@ -102,3 +102,5 @@ FINISHED --2020-06-17 15:29:51--
 Total wall clock time: 0.7s
 Downloaded: 1 files, 218 in 0s (30.3 MB/s)
 ```
+
+Now let's make it an executable file, by using _chmod +x LinEnum.sh_. Run LinEnum by using `./LinEnum.sh`
