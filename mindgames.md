@@ -138,4 +138,4 @@ We can now run this command but switch out "./lib.so" with "./engine.so"
 ![image]({{0xtaylur.github.io}}/assets/got_root.png)
 
 We are now root! We should now be able to cat the root flag.
-![image](0xtaylur.github.io}}/assets/root.png)
+![image]({{0xtaylur.github.io}}/assets/root.png)
