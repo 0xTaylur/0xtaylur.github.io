@@ -9,8 +9,8 @@ Mindgames is a hard rated box on TryHackMe. We're tasked with enumerating, gaini
 There wasn't that much enumeration to do since we only found 2 ports open: 22 running ssh and 80 running a HTTP server from our NMAP scan.
 
 ```markdown
-# Nmap 7.80 scan initiated Tue Jun 16 23:26:12 2020 as: nmap -sC -sV -o nmap 10.10.119.23
-Nmap scan report for 10.10.119.23
+# Nmap 7.80 scan initiated Tue Jun 16 23:26:12 2020 as: nmap -sC -sV -o nmap 10.10.91.145
+Nmap scan report for 10.10.91.145
 Host is up (0.24s latency).
 Not shown: 998 closed ports
 PORT   STATE SERVICE VERSION
