@@ -51,7 +51,7 @@ Progress: 19932 / 87665 (22.74%)^C
 ## Initial Shell
 
 Let's go check out the page!
-![image]({{0xtaylur.github.io}}/assets/mindgames_page.png)
+![image]({{0xtaylur.github.io}}/assets/mindgames/mindgames_page.png)
 
 Hmmm, very intersting. It seems as if the the page decodes the _Brainfuck_ programming language. Let's see what happens when we throw the "Hello, World" section into the textbox.
 ![image]({{0xtaylur.github.io}}/assets/mindgames/hello_world.png)
