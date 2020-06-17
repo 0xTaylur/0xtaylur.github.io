@@ -6,7 +6,7 @@ Mindgames is a hard rated box on TryHackMe. We're tasked with enumerating, gaini
 
 ## Recon
 
-There wasn't that much enumeration to do since we only found 2 ports open from our NMAP scan.
+There wasn't that much enumeration to do since we only found 2 ports open: 22 running ssh and 80 running a HTTP server from our NMAP scan.
 
 ```markdown
 # Nmap 7.80 scan initiated Tue Jun 16 23:26:12 2020 as: nmap -sC -sV -o nmap 10.10.119.23
@@ -26,4 +26,29 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 ```
 
-We see that port 80 is open, so I decided to run a GoBuster scan to see if we could find anything.
+We see that port 80 is open, so I decided to run a GoBuster scan to see if we could find anything. After about 10 minutes of scanning, I figured there were no directories on the site.
+```markdown
+root@kali:~/THM/mindgames# gobuster dir -u 10.10.91.145 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt 
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            http://10.10.91.145
+[+] Threads:        10
+[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt
+[+] Status codes:   200,204,301,302,307,401,403
+[+] User Agent:     gobuster/3.0.1
+[+] Timeout:        10s
+===============================================================
+2020/06/17 10:21:52 Starting gobuster
+===============================================================
+Progress: 19932 / 87665 (22.74%)^C
+[!] Keyboard interrupt detected, terminating.
+===============================================================
+2020/06/17 10:29:03 Finished
+===============================================================
+```
+
+Let's go check out the page!
+
+
