@@ -23,6 +23,7 @@ PORT   STATE SERVICE VERSION
 |_http-title: Mindgames.
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .```
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+```
 
 We see that port 80 is open, so I decided to run a GoBuster scan to see if we could find anything.
