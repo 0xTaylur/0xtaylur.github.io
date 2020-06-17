@@ -56,3 +56,6 @@ Let's go check out the page!
 
 Hmmm, very intersting. Seems as if the the page decodes the _Brainfuck_ programming language. Let's see what happens when we throw the "Hello, World" section into the textbox.
 ![image]({{0xtaylur.github.io}}/assets/hello_world.png)
+
+It just prints _"Hello, World"_. Now let's see what happens when we try it with the Fibonacci brainfuck text.
+![image]({{0xtaylur.github.io}}/assets/fibonacci.png)
