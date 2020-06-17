@@ -51,4 +51,4 @@ Progress: 19932 / 87665 (22.74%)^C
 
 Let's go check out the page!
 
-
+![image]({{0xtaylur.github.io/assets/mindgames_page.png}})
