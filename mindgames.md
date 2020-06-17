@@ -98,4 +98,6 @@ Saving to: ‘LinEnum.sh’
 
 Now let's make it an executable file, by using _chmod +x LinEnum.sh_. Run LinEnum by using "./LinEnum.sh"
 
+After reading through LinEnum we find that _/usr/bin/openssl_ has POSIX capability.
+![image}({{0xtaylur.github.io}}/assets/openssl.png)
 
