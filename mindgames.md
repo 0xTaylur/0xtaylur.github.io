@@ -1,6 +1,6 @@
 # TryHackMe Mindgames Writeup
 
-Challenge Link: [Mindgames] (https://tryhackme.com/room/mindgames)
+Challenge Link: [Mindgames](https://tryhackme.com/room/mindgames)
 
 Mindgames is a hard rated box on TryHackMe. We're tasked with enumerating, gaining initial access, then a somewhat tricky privilege escalation.
 
