@@ -1,6 +1,6 @@
-# Writeups for HTB and THM
+## Writeups for THM
 
-## TryHackMe
+
 
 [Mindgames](https://0xtaylur.github.io/mindgames)
 
