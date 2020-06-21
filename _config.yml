@@ -1,5 +1,6 @@
 theme: jekyll-theme-midnight
 
 title: "taylur"
-url: http://taylur.io
+locale : "en-US
+name: "Taylur"
 
