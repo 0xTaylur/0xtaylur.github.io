@@ -1,9 +1,10 @@
-# TryHackMe Mindgames Writeup
+# Mindgames - TryHackMe
 
 Challenge Link: [Mindgames](https://tryhackme.com/room/mindgames)
 
 ![image]({{0xtaylur.github.io}}/assets/mindgames/mind.png)
 
+## Summary
 Mindgames is a hard rated box on TryHackMe. We're tasked with enumerating, gaining initial access,and then a somewhat tricky privilege escalation using a Library Load via OpenSSL.
 
 ## Recon
