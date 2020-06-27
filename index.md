@@ -1,4 +1,4 @@
-## Writeups for THM
+## Writeups
 
 
 
