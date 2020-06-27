@@ -4,4 +4,4 @@
 
 [Mindgames](https://0xtaylur.github.io/mindgames)
 
-[Lord of The Root](https://0xtaylur.github.io/lotr)
+[Tabby](https://0xtaylur.github.io/tabby)
