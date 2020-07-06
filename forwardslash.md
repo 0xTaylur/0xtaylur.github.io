@@ -52,3 +52,18 @@ root@kali:~/HTB/forwardslash# gobuster dir -q -w /usr/share/seclists/Discovery/W
 
 If I try to access that page I get a custom 403 error message. My IP address is shown so this could be a hint that it can only be accessed locally.
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/denied.png)
+
+Going back the dashboard options, I notice the option to change my profile picture has been disabled.
+![image]({{0xtaylur.github.io}}/assets/forwardslash/disabled.png)
+
+This is just disabled client-side with the`disabled`HTML tag:
+```
+<form action="/profilepicture.php" method="post">
+        URL:
+        <input type="text" name="url" disabled style="width:600px"><br>
+        <input style="width:200px" type="submit" value="Submit" disabled>
+</form>
+```
+
+Using Burp, I can send a POST request to`profilepicture.php`and send it to the repeater tab. After some testing with the URL parameter, I found I was able to use SSRF and read file with it. The first thing I tried was`/etc/passwd`
+![image]({{0xtaylur.github.io}}/assets/forwardslash/burp_etc.png)
