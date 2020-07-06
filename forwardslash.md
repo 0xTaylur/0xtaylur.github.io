@@ -41,3 +41,14 @@ I go to the backup subdomain to be greeted with a login page and a link to creat
 
 Once I am logged in, I see a dashboard with a couple of options.
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/dashboard.png)
+
+I'll come back to this dashboard as I see nothing interesting yet.
+
+After running a gobuster on the vhost I find a `/dev` directory.
+```
+root@kali:~/HTB/forwardslash# gobuster dir -q -w /usr/share/seclists/Discovery/Web-Content/big.txt -u backup.forwardslash.htb
+/dev (Status: 301)
+```
+
+If I try to access that page I get a custom 403 error message. My IP address is shown so this could be a hint that it can only be accessed locally.
+![image]({{0xtaylur.github.io}}/assets/forwardslash/denied.png)
