@@ -278,3 +278,9 @@ Password:
 pain@forwardslash:~$ 
 ```
 
+I can now read the`user.txt`file.
+![image]({{0xtaylur.github.io}}/assets/forwardslash/user.png)
+
+The user`pain`can run the following commands with no password.
+![image]({{0xtaylur.github.io}}/assets/forwardslash/sudol.png)
+
