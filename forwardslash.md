@@ -27,5 +27,5 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
 Doing a Gobuster scan on port 80 gives me nothing.
-![image]({{0xtaylur.github.io}}/assets/forwardslash/gobuster)
+![image]({{0xtaylur.github.io}}/assets/forwardslash/gobuster.png)
 
