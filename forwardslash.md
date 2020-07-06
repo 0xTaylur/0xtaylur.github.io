@@ -26,6 +26,10 @@ PORT   STATE SERVICE VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
-Doing a Gobuster scan on port 80 gives me nothing.
-![image]({{0xtaylur.github.io}}/assets/forwardslash/gobuster.png)
+Using gobuster to scan for vhosts give us a hit for `backup.forwardslash.htb`
+```
+gobuster vhost -q -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -t 50 -u forwardslash.htb
+```
 
+I go to the backup subdomain to be greeted with a login page
+![image]({{0xtaylur.github.io}}/assets/forwardslash/backup_login.png)
