@@ -284,3 +284,79 @@ I can now read the`user.txt`file.
 The user`pain`can run the following commands with no password.
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/sudol.png)
 
+In the home directory, I find a python script named encrypter.py and a text file named ciphertext in the directory encryptorinator. These are the python script contents:
+```py
+def encrypt(key, msg):
+    key = list(key)
+    msg = list(msg)
+    for char_key in key:
+        for i in range(len(msg)):
+            if i == 0:
+                tmp = ord(msg[i]) + ord(char_key) + ord(msg[-1])
+            else:
+                tmp = ord(msg[i]) + ord(char_key) + ord(msg[i-1])
+
+            while tmp > 255:
+                tmp -= 256
+            msg[i] = chr(tmp)
+    return ''.join(msg)
+
+def decrypt(key, msg):
+    key = list(key)
+    msg = list(msg)
+    for char_key in reversed(key):
+        for i in reversed(range(len(msg))):
+            if i == 0:
+                tmp = ord(msg[i]) - (ord(char_key) + ord(msg[-1]))
+            else:
+                tmp = ord(msg[i]) - (ord(char_key) + ord(msg[i-1]))
+            while tmp < 0:
+                tmp += 256
+            msg[i] = chr(tmp)
+    return ''.join(msg)
+
+
+print encrypt('REDACTED', 'REDACTED')
+print decrypt('REDACTED', encrypt('REDACTED', 'REDACTED'))
+```
+
+After a bit on analyzing, I was able to decrypt with my own python script.
+
+```py
+def decrypt(key, msg):
+    key = list(key)
+    msg = list(msg)
+    for char_key in reversed(key):
+        for i in reversed(range(len(msg))):
+            if i == 0:
+                tmp = ord(msg[i]) - (ord(char_key) + ord(msg[-1]))
+            else:
+                tmp = ord(msg[i]) - (ord(char_key) + ord(msg[i-1]))
+            while tmp < 0:
+                tmp += 256
+            msg[i] = chr(tmp)
+    return ''.join(msg)
+
+ciphertext = open('ciphertext', 'r').read().rstrip()
+for i in range(1, 165):
+    for j in range(33, 127):
+        key = chr(j) * i
+        msg = decrypt(key, ciphertext)
+        if 'the ' in msg or 'be ' in msg or 'and ' in msg or 'of ' in msg :
+            exit("Key: {0}, Msg: {2}".format(key, len(key), msg))
+```
+
+Once I run my script, we get a key and a message.
+```
+pain@forwardslash:~/encryptorinator$ python2 d.py 
+Key: ttttttttttttttttt, Msg: Hl��vF��;�������&you liked my new encryption tool, pretty secure huh, anyway here is the key to the encrypted image from /var/backups/recovery: cB!6%sdH8Lj^@Y*$C2cf
+```
+
+Going into the directory`/var/backups/recovery`I am now able to map the img file named`encrypted_backup.img`
+![image]({{0xtaylur.github.io}}/assets/forwardslash/mapbackup.png)
+
+The backup file goes into the`/dev/mapper`directory. I can then mount the backup img file to see the contents inside.
+![image]({{0xtaylur.github.io}}/assets/forwardslash/foundrsa.png)
+
+I find the root ssh private key and put it on my host machine. I can now login as`root` and grab the root flag.
+![image]({{0xtaylur.github.io}}/assets/forwardslash/root.png)
