@@ -116,7 +116,7 @@ url=php://filter/convert.base64-encode/resource=file:///var/www/backup.forwardsl
 We have a response encoded in base64 come back to us.
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/base64.png)
 
-After i've decoded the base64 string I can now see the full PHP code
+After I've decoded the base64 string, I can now see the full PHP code.
 ```php
 <?php
 //include_once ../session.php;
@@ -211,7 +211,7 @@ I can now login with SSH as user`chiv`.
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/login_chiv.png)
 
 ### Escalation to user pain
-Even though I am logged in as user`chiv` I cannot read the user flag because it is owned by user`pain`. I ran LinEnum to see if I could find a way to escalate to`pain` and found a SUID binary owned by him.
+Even though I am logged in as user`chiv`, I cannot read the user flag because it is owned by user`pain`. I ran LinEnum to see if I could find a way to escalate to`pain` and found a SUID binary owned by him.
 ```
 [-] SUID files:
 -r-sr-xr-x 1 pain pain 13384 Mar  6 10:06 /usr/bin/backup
