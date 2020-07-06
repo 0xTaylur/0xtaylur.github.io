@@ -220,7 +220,7 @@ Even though I am logged in as user`chiv`, I cannot read the user flag because it
 Once I run the binary, it shows this output.
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/backup_binary.png)
 
-The generated MD5 hash in the binary output changes everytime it's executed. In the output, I notice it mentions that it's a time based backup viewer. This is why the hash is different everytime, it takes the local time and coverts it to MD5. I created a bash script to check if the MD5 value will be the same.
+The generated MD5 hash in the binary output changes everytime it's executed. In the output, I notice it mentions that it's a time based backup viewer. This is why the hash is different everytime; it takes the local time and coverts it to MD5. I created a bash script to check if the MD5 value will be the same.
 ```bash
 time="$(date + %H:%M:%S | tr -d '\n' |md5sum | tr -d ' -')"
 echo $time
@@ -230,7 +230,7 @@ backup
 I run my bash script to test and see if I was right.
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/test_sh.png)
 
-The MD5 value is the same, but still nothing happens. I found a file named`config.php.bak` that turns out to be the old config file from the binary we run. I edited my bash script to include the backup file.
+The MD5 value is the same, but still, nothing happens. I found a file named`config.php.bak` that turns out to be the old config file from the binary we run. I edited my bash script to include the backup file.
 ```bash
 time="$(date +%H:%M:%S | tr -d '\n' |md5sum | tr -d ' -')"
 echo $time
