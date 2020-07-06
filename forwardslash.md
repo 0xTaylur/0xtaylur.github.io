@@ -26,9 +26,13 @@ PORT   STATE SERVICE VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
+When I browse the website with it's IP address, it redirected me to `forwardslash.htb`. So I added this domain name to my local host file to use the hostname instead. It seems as the website has been defaced by **The Backslash Gang**. There are no links or html comments that would help me decide what to do next.
+![image]({{0xtaylur.github.io}}/assets/forwardslash/webpage.png)
+
 Using gobuster to scan for vhosts give us a hit for `backup.forwardslash.htb`
 ```
-gobuster vhost -q -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -t 50 -u forwardslash.htb
+root@kali:~/HTB/forwardslash# gobuster vhost -q -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -t 50 -u forwardslash.htb
+Found: backup.forwardslash.htb (Status:302) [Size: 33]
 ```
 
 I go to the backup subdomain to be greeted with a login page
