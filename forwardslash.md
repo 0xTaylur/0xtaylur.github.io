@@ -352,7 +352,7 @@ pain@forwardslash:~/encryptorinator$ python2 d.py
 Key: ttttttttttttttttt, Msg: Hl��vF��;�������&you liked my new encryption tool, pretty secure huh, anyway here is the key to the encrypted image from /var/backups/recovery: cB!6%sdH8Lj^@Y*$C2cf
 ```
 
-Going into the directory`/var/backups/recovery`I am now able to map the img file named`encrypted_backup.img`
+Going into the directory`/var/backups/recovery`, I am now able to map the img file named`encrypted_backup.img`
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/mapbackup.png)
 
 The backup file goes into the`/dev/mapper`directory. I can then mount the backup img file to see the contents inside.
