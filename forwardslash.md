@@ -35,5 +35,9 @@ root@kali:~/HTB/forwardslash# gobuster vhost -q -w /usr/share/seclists/Discovery
 Found: backup.forwardslash.htb (Status:302) [Size: 33]
 ```
 
-I go to the backup subdomain to be greeted with a login page
+I go to the backup subdomain to be greeted with a login page and a link to create an account.
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/backup_login.png)
+![image]({{0xtaylur.github.io}}/assets/forwardslash/signup.png)
+
+Once I am logged in, I see a dashboard with a couple of options.
+![image]({{0xtaylur.github.io}}/assets/forwardslash/dashboard.png)
