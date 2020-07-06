@@ -198,7 +198,7 @@ function ftp_get_string($ftp, $filename) {
 ?>
 ```
 
-The PHP code contains credentials for ths user`chiv`.
+The PHP code contains credentials for the user`chiv`.
 ```php
 if (@ftp_login($conn_id, "chiv", 'N0bodyL1kesBack/')) {
 
@@ -210,3 +210,12 @@ if (@ftp_login($conn_id, "chiv", 'N0bodyL1kesBack/')) {
 I can now login with SSH as user`chiv`.
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/login_chiv.png)
 
+### Escalation to user pain
+Even though I am logged in as user`chiv` I cannot read the user flag because it is owned by user`pain`. I ran LinEnum to see if I could find a way to escalate to`pain` and found a SUID binary owned by him.
+```
+[-] SUID files:
+-r-sr-xr-x 1 pain pain 13384 Mar  6 10:06 /usr/bin/backup
+```
+
+Once I run the binary, it shows this output.
+![image]({{0xtaylur.github.io}}/assets/forwardslash/backup_binary.png)
