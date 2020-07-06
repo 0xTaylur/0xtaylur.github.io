@@ -44,7 +44,7 @@ Once I am logged in, I see a dashboard with a couple of options.
 
 I'll come back to this dashboard as I see nothing interesting yet.
 
-After running a gobuster on the vhost I find a`/dev`directory.
+After running a gobuster on the vhost, I find a`/dev`directory.
 ```
 root@kali:~/HTB/forwardslash# gobuster dir -q -w /usr/share/seclists/Discovery/Web-Content/big.txt -u backup.forwardslash.htb
 /dev (Status: 301)
