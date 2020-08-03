@@ -3,4 +3,4 @@
 ![image]({{0xtaylur.github.io}}/assets/openadmin/card.png)
 
 ## Summary
-OpenAdmin is an easy linux box that includes a small amount of enumeration before discovering an exploit on an OpenNetAdmin servive that'll get me a low user shell. Next, I dig through the internals of the webserver and find credentials to another user. I discover a webpage that has a SSH key of another user that needs to be cracked. The privilege escalation uses nano to grant me access to the root user.
+OpenAdmin is an easy linux box that starts off using an RCE exploit for the OpenNetAdmin service on port 80. Then, I get credentials from a database config that can be used to SSH into the box. I find another web application with a SHA512 hash in the code for a login page. After looking at the webpage I find an encrypted SSH key that needs to be cracked. Once I get the last shell I can run nano as root with sudo and get a root shell.
