@@ -14,7 +14,7 @@ The default Ubuntu page is shown when I checkout the webserver.
 ![image]({{0xtaylur.github.io}}/assets/openadmin/port80.png)
 
 Running a gobuster scan reveals 3 hidden directories.
-![image]({{0xtaylur.github.io}}/assets/openadmin/gobuster.png
+![image]({{0xtaylur.github.io}}/assets/openadmin/gobuster.png)
 
 These 3 directories are static webpages, but I notice a login page on the`/music` page.
 
