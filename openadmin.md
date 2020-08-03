@@ -247,6 +247,8 @@ Session completed
 The passphrase is`bloodninjas`and I can now SSH into the box as joanna and read the user flag.
 ![image]({{0xtaylur.github.io}}/assets/openadmin/user.png)
 
+### Privilege Escalation
+
 I see what sudo commands joanna can run and notice she can use`nano`. I go to GTFOBins to see if there is a way to spawn a root shell.
 
 I find the sudo nano command [here](https://gtfobins.github.io/gtfobins/nano/#sudo) and can now read the root flag.
