@@ -1,7 +1,9 @@
-## Writeups
+## Recent Posts
 
+[THM-Mindgames](https://0xtaylur.github.io/mindgames)
 
+[HTB-Forwardslash](https://0xtaylur.github.io/forwardslash)
 
-[Mindgames](https://0xtaylur.github.io/mindgames)
+[HTB-OpenAdmin](https://0xtaylur.github.io/openadmin)
 
-[Tabby](https://0xtaylur.github.io/tabby)
+[HTB-Tabby - Waiting for retirement](https://0xtaylur.github.io/tabby)

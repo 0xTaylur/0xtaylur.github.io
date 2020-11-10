@@ -1,4 +1,7 @@
-theme: jekyll-theme-midnight
+theme: jekyll-theme-hacker
+title: "Taylur's Writeups and Blogs"
+description: >-
+    This site will be used to post writeups from HTB and my own blogs posts.
+    
 
-title: " "
 
